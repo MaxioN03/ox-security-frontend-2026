@@ -1,17 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-export type EmployeeStatus =
-  | 'Working'
-  | 'OnVacation'
-  | 'LunchTime'
-  | 'BusinessTrip';
-
-export interface Employee {
-  id: number;
-  name: string;
-  status: EmployeeStatus;
-  img: string;
-}
+import type { Employee } from '../../domain/employee';
+import type { EmployeeStatus } from '../../domain/status';
 
 interface UpdateUserStatusRequest {
   userId: number;
