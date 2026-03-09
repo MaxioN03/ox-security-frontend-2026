@@ -1,0 +1,74 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+.root {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 20px 35px rgba(15, 23, 42, 0.2);
+}
+
+.title {
+  margin: 0 0 6px;
+  color: #111827;
+  font-size: 20px;
+}
+
+.description {
+  margin: 0 0 14px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  color: #334155;
+  font-size: 13px;
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 14px;
+  border: 1px solid #d9dee6;
+  border-radius: 5px;
+  font-size: 14px;
+  padding: 10px 12px;
+  background: #ffffff;
+  color: #344054;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.cancelButton,
+.createButton {
+  border: none;
+  border-radius: 5px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancelButton {
+  color: #111827;
+  background: #e5e7eb;
+}
+
+.createButton {
+  color: #ffffff;
+  background: #45a6ff;
+}

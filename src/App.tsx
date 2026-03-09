@@ -1,12 +1,8 @@
-import './App.css';
+import type { FC } from 'react';
+import { EmployeesPage } from './features/employees/ui/EmployeesPage';
 
-function App() {
-  return (
-    <main>
-      <h1>Employee Status Management</h1>
-      <p>Vite + React + TypeScript + Redux Toolkit foundation is ready.</p>
-    </main>
-  );
-}
+export const App: FC = () => {
+  return <EmployeesPage />;
+};
 
 export default App;

@@ -1,0 +1,77 @@
+.root {
+  border: 1px solid #e7ebf1;
+  border-radius: 6px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(22, 36, 61, 0.05);
+  display: grid;
+  gap: 10px;
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 82px;
+  height: 82px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.name {
+  margin: 0;
+  color: #273142;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.statusLabel {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #6b7280;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.statusSelect {
+  border: 1px solid #d9dee6;
+  border-radius: 5px;
+  font-size: 14px;
+  padding: 10px 12px;
+  background: #ffffff;
+  color: #344054;
+}
+
+.applyButton {
+  border: none;
+  border-radius: 5px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background: #45a6ff;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    background: #b5deff;
+  }
+}

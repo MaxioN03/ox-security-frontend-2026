@@ -1,0 +1,48 @@
+.root {
+  height: 58px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #52b6ff, #2d86f5);
+}
+
+.title {
+  margin: 0;
+  color: #3b95ea;
+  font-size: 33px;
+  line-height: 1;
+
+  @media (max-width: 860px) {
+    font-size: 26px;
+  }
+}
+
+.logoutButton {
+  border: 1px solid #8dc6f8;
+  border-radius: 5px;
+  background: #f8fcff;
+  color: #4b9de4;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  cursor: pointer;
+}
