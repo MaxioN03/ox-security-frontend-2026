@@ -1,0 +1,21 @@
+.wrapper {
+  flex-shrink: 0;
+}
+
+.image,
+.fallback {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #52b6ff, #2d86f5);
+  color: #ffffff;
+  font-size: 32px;
+  font-weight: 600;
+}

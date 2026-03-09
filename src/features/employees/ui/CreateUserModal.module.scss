@@ -1,7 +1,7 @@
 .backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.45);
+  background: rgba(15, 23, 42, 0.65);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,33 +11,47 @@
 .root {
   width: 100%;
   max-width: 420px;
+  min-width: 0;
+  box-sizing: border-box;
   background: #ffffff;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 20px 35px rgba(15, 23, 42, 0.2);
 }
 
+.header {
+  margin-bottom: 20px;
+}
+
 .title {
-  margin: 0 0 6px;
+  margin: 0 0 12px;
   color: #111827;
   font-size: 20px;
 }
 
-.description {
-  margin: 0 0 14px;
-  color: #64748b;
-  font-size: 14px;
+.divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 0 -20px;
+}
+
+.statusSelectWrapper {
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 20px;
 }
 
 .label {
   display: block;
-  margin-bottom: 6px;
-  color: #334155;
-  font-size: 13px;
+  margin-bottom: 4px;
+  color: #94a3b8;
+  font-size: 12px;
 }
 
 .input {
   width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   margin-bottom: 14px;
   border: 1px solid #d9dee6;
   border-radius: 5px;
@@ -55,20 +69,61 @@
 
 .cancelButton,
 .createButton {
-  border: none;
+  box-sizing: border-box;
   border-radius: 5px;
   padding: 10px 14px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 .cancelButton {
-  color: #111827;
-  background: #e5e7eb;
+  border: 1px solid #8dc6f8;
+  background: #f8fcff;
+  color: #4b9de4;
+
+  &:hover:not(:disabled) {
+    background: #e8f5ff;
+    border-color: #6bb3f5;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #4b9de4;
+    outline-offset: 2px;
+  }
+
+  &:active:not(:disabled) {
+    background: #d8eeff;
+    border-color: #4b9de4;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 }
 
 .createButton {
+  border: none;
   color: #ffffff;
   background: #45a6ff;
+
+  &:hover:not(:disabled) {
+    background: #2d8ef5;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #45a6ff;
+    outline-offset: 2px;
+  }
+
+  &:active:not(:disabled) {
+    background: #1a7de8;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 }

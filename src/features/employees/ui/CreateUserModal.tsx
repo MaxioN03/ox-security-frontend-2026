@@ -1,4 +1,6 @@
 import { type FC, useState } from 'react';
+import type { EmployeeStatus } from '../../../domain/status';
+import { EmployeeStatusSelect } from './EmployeeCard/EmployeeStatusSelect';
 import styles from './CreateUserModal.module.scss';
 
 interface CreateUserModalProps {
@@ -13,6 +15,7 @@ export const CreateUserModal: FC<CreateUserModalProps> = ({
   onClose,
 }) => {
   const [name, setName] = useState('');
+  const [status, setStatus] = useState<EmployeeStatus>('Working');
 
   if (!isOpen) {
     return null;
@@ -26,6 +29,7 @@ export const CreateUserModal: FC<CreateUserModalProps> = ({
 
   const handleClose = () => {
     setName('');
+    setStatus('Working');
     onClose();
   };
 
@@ -37,13 +41,13 @@ export const CreateUserModal: FC<CreateUserModalProps> = ({
         aria-modal="true"
         aria-label="Create new user"
       >
-        <h2 className={styles.title}>Create New User</h2>
-        <p className={styles.description}>
-          This modal is intentionally non-functional for this task.
-        </p>
+        <header className={styles.header}>
+          <h2 className={styles.title}>Create New User</h2>
+          <div className={styles.divider} />
+        </header>
 
         <label className={styles.label} htmlFor="create-user-name">
-          User name
+          User name:
         </label>
         <input
           className={styles.input}
@@ -53,6 +57,13 @@ export const CreateUserModal: FC<CreateUserModalProps> = ({
           placeholder="English letters only"
           onChange={(event) => handleNameChange(event.target.value)}
         />
+
+        <label className={styles.label} htmlFor="create-user-status">
+          Status:
+        </label>
+        <div className={styles.statusSelectWrapper}>
+          <EmployeeStatusSelect value={status} onChange={setStatus} />
+        </div>
 
         <div className={styles.actions}>
           <button
@@ -66,6 +77,7 @@ export const CreateUserModal: FC<CreateUserModalProps> = ({
             type="button"
             className={styles.createButton}
             onClick={handleClose}
+            disabled={!name.trim()}
           >
             Create
           </button>

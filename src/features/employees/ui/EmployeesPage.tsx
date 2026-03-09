@@ -18,13 +18,14 @@ import {
 } from '../model/selectors';
 import { CreateUserModal } from './CreateUserModal';
 import { EmployeeCard } from './EmployeeCard';
+import { EmployeeCardSkeleton } from './EmployeeCardSkeleton';
 import { EmployeesHeader } from './EmployeesHeader';
 import { EmployeesToolbar } from './EmployeesToolbar';
 import styles from './EmployeesPage.module.scss';
 
 export const EmployeesPage: FC = () => {
   const dispatch = useAppDispatch();
-  const { isLoading, isFetching, isError } = useGetUsersQuery();
+  const { isLoading, isError } = useGetUsersQuery();
   const [updateUserStatus, { isLoading: isUpdating }] =
     useUpdateUserStatusMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -42,22 +43,28 @@ export const EmployeesPage: FC = () => {
     [employees, pendingStatusByUserId],
   );
 
-  const handleApply = async (
+  const handleStatusChange = async (
     userId: number,
-    pendingStatus: EmployeeStatus,
+    newStatus: EmployeeStatus,
     currentStatus: EmployeeStatus,
   ) => {
-    if (pendingStatus === currentStatus) {
+    if (newStatus === currentStatus) {
       return;
     }
 
-    await updateUserStatus({ userId, status: pendingStatus }).unwrap();
-    dispatch(clearPendingStatus(userId));
+    dispatch(setPendingStatus({ userId, status: newStatus }));
+    try {
+      await updateUserStatus({ userId, status: newStatus }).unwrap();
+    } finally {
+      dispatch(clearPendingStatus(userId));
+    }
   };
 
   return (
-    <section className={styles.layout}>
-      <EmployeesHeader />
+    <div className={styles.layout}>
+      <div className={styles.headerWrapper}>
+        <EmployeesHeader />
+      </div>
 
       <section className={styles.page}>
         <EmployeesToolbar
@@ -68,9 +75,13 @@ export const EmployeesPage: FC = () => {
           onCreateClick={() => setIsModalOpen(true)}
         />
 
-        {isLoading || isFetching ? (
-          <p className={styles.stateMessage}>Loading employees...</p>
-        ) : null}
+        {isLoading && (
+          <ul className={styles.list}>
+            {Array.from({ length: 2 }).map((_, i) => (
+              <EmployeeCardSkeleton key={i} />
+            ))}
+          </ul>
+        )}
 
         {isError ? (
           <p className={`${styles.stateMessage} ${styles.stateError}`}>
@@ -97,9 +108,8 @@ export const EmployeesPage: FC = () => {
                 pendingStatus={employee.pendingStatus}
                 isUpdating={isUpdating}
                 onStatusChange={(userId, status) =>
-                  dispatch(setPendingStatus({ userId, status }))
+                  handleStatusChange(userId, status, employee.status)
                 }
-                onApply={handleApply}
               />
             ))}
           </ul>
@@ -110,6 +120,6 @@ export const EmployeesPage: FC = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
-    </section>
+    </div>
   );
 };
