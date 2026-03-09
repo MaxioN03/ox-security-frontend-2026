@@ -1,6 +1,7 @@
 import { type FC } from 'react';
 import {
   EMPLOYEE_STATUSES,
+  EMPLOYEE_STATUS_LABELS,
   type EmployeeStatus,
 } from '../../../../../domain/status';
 import styles from './EmployeeStatusSelect.module.scss';
@@ -39,7 +40,7 @@ export const EmployeeStatusSelect: FC<EmployeeStatusSelectProps> = ({
         >
           {EMPLOYEE_STATUSES.map((status) => (
             <option key={status} value={status}>
-              {status}
+              {EMPLOYEE_STATUS_LABELS[status]}
             </option>
           ))}
         </select>

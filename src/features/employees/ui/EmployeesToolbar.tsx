@@ -1,6 +1,7 @@
 import { type FC, useRef } from 'react';
 import {
   EMPLOYEE_STATUSES,
+  EMPLOYEE_STATUS_LABELS,
   type EmployeeStatusFilter,
 } from '../../../domain/status';
 import styles from './EmployeesToolbar.module.scss';
@@ -112,7 +113,7 @@ export const EmployeesToolbar: FC<EmployeesToolbarProps> = ({
             <option value="All">Filter by status</option>
             {EMPLOYEE_STATUSES.map((status) => (
               <option key={status} value={status}>
-                {status}
+                {EMPLOYEE_STATUS_LABELS[status]}
               </option>
             ))}
           </select>
