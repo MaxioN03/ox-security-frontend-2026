@@ -14,8 +14,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #52b6ff, #2d86f5);
-  color: #ffffff;
+  background: linear-gradient(135deg, var(--color-avatar-gradient-start), var(--color-avatar-gradient-end));
+  color: var(--color-text-inverse);
   font-size: 32px;
   font-weight: 600;
 }

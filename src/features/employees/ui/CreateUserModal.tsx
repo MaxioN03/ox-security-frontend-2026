@@ -1,4 +1,4 @@
-import { type FC, useState } from 'react';
+import { type FC, useState, useEffect, useCallback } from 'react';
 import type { EmployeeStatus } from '../../../domain/status';
 import { EmployeeStatusSelect } from './EmployeeCard/EmployeeStatusSelect';
 import styles from './CreateUserModal.module.scss';
@@ -17,9 +17,20 @@ export const CreateUserModal: FC<CreateUserModalProps> = ({
   const [name, setName] = useState('');
   const [status, setStatus] = useState<EmployeeStatus>('Working');
 
-  if (!isOpen) {
-    return null;
-  }
+  const handleClose = useCallback(() => {
+    setName('');
+    setStatus('Working');
+    onClose();
+  }, [onClose]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') handleClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, handleClose]);
 
   const handleNameChange = (value: string) => {
     if (ENGLISH_LETTERS_ONLY.test(value)) {
@@ -27,14 +38,16 @@ export const CreateUserModal: FC<CreateUserModalProps> = ({
     }
   };
 
-  const handleClose = () => {
-    setName('');
-    setStatus('Working');
-    onClose();
-  };
+  if (!isOpen) {
+    return null;
+  }
 
   return (
-    <div className={styles.backdrop} role="presentation">
+    <div
+      className={styles.backdrop}
+      role="presentation"
+      onClick={(e) => e.target === e.currentTarget && handleClose()}
+    >
       <div
         className={styles.root}
         role="dialog"
@@ -54,7 +67,7 @@ export const CreateUserModal: FC<CreateUserModalProps> = ({
           id="create-user-name"
           type="text"
           value={name}
-          placeholder="English letters only"
+          placeholder="e.g. John Smith"
           onChange={(event) => handleNameChange(event.target.value)}
         />
 
@@ -68,18 +81,18 @@ export const CreateUserModal: FC<CreateUserModalProps> = ({
         <div className={styles.actions}>
           <button
             type="button"
-            className={styles.cancelButton}
-            onClick={handleClose}
-          >
-            Cancel
-          </button>
-          <button
-            type="button"
             className={styles.createButton}
             onClick={handleClose}
             disabled={!name.trim()}
           >
             Create
+          </button>
+          <button
+            type="button"
+            className={styles.cancelButton}
+            onClick={handleClose}
+          >
+            Cancel
           </button>
         </div>
       </div>

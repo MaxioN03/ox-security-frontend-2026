@@ -1,6 +1,6 @@
 .root {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 64px;
 
   @media (max-width: 860px) {
@@ -12,31 +12,31 @@
   height: 52px;
   box-sizing: border-box;
   border: none;
-  border-radius: 5px;
-  font-size: 18px;
+  border-radius: 8px;
+  font-size: 16px;
   font-weight: 600;
-  color: #ffffff;
-  background: #45a6ff;
+  color: var(--color-text-inverse);
+  background: var(--color-primary);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   min-width: 120px;
   justify-content: center;
   padding: 0 32px;
   transition: background-color 0.15s ease;
 
   &:hover:not(:disabled) {
-    background: #2d8ef5;
+    background: var(--color-primary-hover);
   }
 
   &:focus-visible {
-    outline: 2px solid #45a6ff;
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
 
   &:active:not(:disabled) {
-    background: #1a7de8;
+    background: var(--color-primary-active);
   }
 
   &:disabled {
@@ -53,9 +53,9 @@
   flex: 1;
   display: flex;
   align-items: stretch;
-  border: 1px solid #d9dee6;
-  border-radius: 5px;
-  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
   overflow: hidden;
 
   @media (max-width: 860px) {
@@ -67,34 +67,34 @@
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
+  gap: 8px;
+  padding: 8px 12px;
   min-width: 0;
   cursor: text;
 }
 
 .searchFilterDivider {
   width: 1px;
-  background: #d9dee6;
+  background: var(--color-border);
   margin: 8px 0;
 }
 
 .searchIcon {
   flex-shrink: 0;
-  color: #9ca3af;
+  color: var(--color-text-muted);
 }
 
 .searchInput {
   flex: 1;
   border: none;
   padding: 0;
-  font-size: 14px;
-  color: #344054;
+  font-size: 16px;
+  color: var(--color-text-primary);
   background: transparent;
   outline: none;
 
   &::placeholder {
-    color: #9ca3af;
+    color: var(--color-text-muted);
   }
 }
 
@@ -109,10 +109,10 @@
   height: 100%;
   border: none;
   border-radius: 0;
-  font-size: 14px;
-  padding: 10px 36px 10px 12px;
+  font-size: 16px;
+  padding: 8px 36px 8px 12px;
   background: transparent;
-  color: #344054;
+  color: var(--color-text-primary);
   appearance: none;
   -webkit-appearance: none;
 }
@@ -123,5 +123,5 @@
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
-  color: #6b7280;
+  color: var(--color-text-secondary);
 }

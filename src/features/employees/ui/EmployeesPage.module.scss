@@ -9,7 +9,7 @@
 .page {
   // TODO return
   // max-width: 1280px;
-  max-width: 927px;
+  max-width: 1024px;
   margin: 24px auto 0;
   padding: 0 20px;
 }
@@ -24,10 +24,10 @@
 }
 
 .stateMessage {
-  margin: 0 0 10px;
-  color: #5c6980;
+  margin: 0 0 8px;
+  color: var(--color-text-secondary);
 }
 
 .stateError {
-  color: #b91c1c;
+  color: var(--color-error);
 }

@@ -6,11 +6,11 @@ import {
 } from '../../../../../domain/status';
 import styles from './EmployeeStatusSelect.module.scss';
 
-const STATUS_COLORS: Record<EmployeeStatus, string> = {
-  Working: '#34c759',
-  OnVacation: '#ff7a59',
-  LunchTime: '#ffc857',
-  BusinessTrip: '#a66bff',
+const STATUS_COLOR_VARS: Record<EmployeeStatus, string> = {
+  Working: 'var(--color-status-working)',
+  OnVacation: 'var(--color-status-vacation)',
+  LunchTime: 'var(--color-status-lunch)',
+  BusinessTrip: 'var(--color-status-trip)',
 };
 
 interface EmployeeStatusSelectProps {
@@ -28,7 +28,7 @@ export const EmployeeStatusSelect: FC<EmployeeStatusSelectProps> = ({
     <div className={styles.wrapper}>
       <span
         className={styles.ring}
-        style={{ borderColor: STATUS_COLORS[value] }}
+        style={{ borderColor: STATUS_COLOR_VARS[value] }}
         aria-hidden="true"
       />
       <div className={styles.inner}>

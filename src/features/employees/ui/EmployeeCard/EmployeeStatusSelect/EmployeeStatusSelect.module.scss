@@ -3,7 +3,7 @@
   align-items: center;
   gap: 8px;
   height: 24px;
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid var(--color-text-primary);
   padding-bottom: 4px;
   width: 100%;
   box-sizing: border-box;
@@ -29,12 +29,12 @@
   flex: 1;
   border: none;
   border-radius: 0;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
-  line-height: 22px;
+  line-height: 24px;
   padding: 0 24px 0 0;
   background: transparent;
-  color: #1e293b;
+  color: var(--color-text-primary);
   min-width: 0;
   outline: none;
   appearance: none;
@@ -51,5 +51,5 @@
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
-  color: #6b7280;
+  color: var(--color-text-secondary);
 }

@@ -1,7 +1,7 @@
 .backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.65);
+  background: var(--color-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,10 +13,10 @@
   max-width: 420px;
   min-width: 0;
   box-sizing: border-box;
-  background: #ffffff;
+  background: var(--color-surface);
   border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 20px 35px rgba(15, 23, 42, 0.2);
+  box-shadow: 0 20px 32px var(--color-shadow-modal);
 }
 
 .header {
@@ -25,13 +25,13 @@
 
 .title {
   margin: 0 0 12px;
-  color: #111827;
+  color: var(--color-text-primary);
   font-size: 20px;
 }
 
 .divider {
   height: 1px;
-  background: #e5e7eb;
+  background: var(--color-border);
   margin: 0 -20px;
 }
 
@@ -44,7 +44,7 @@
 .label {
   display: block;
   margin-bottom: 4px;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   font-size: 12px;
 }
 
@@ -52,50 +52,53 @@
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
-  margin-bottom: 14px;
-  border: 1px solid #d9dee6;
-  border-radius: 5px;
-  font-size: 14px;
-  padding: 10px 12px;
-  background: #ffffff;
-  color: #344054;
+  margin-bottom: 16px;
+  border: none;
+  border-bottom: 1px solid var(--color-text-primary);
+  border-radius: 0;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0 0 4px 0;
+  background: transparent;
+  color: var(--color-text-primary);
+  outline: none;
 }
 
 .actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 8px;
 }
 
 .cancelButton,
 .createButton {
   box-sizing: border-box;
-  border-radius: 5px;
-  padding: 10px 14px;
-  font-size: 14px;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 .cancelButton {
-  border: 1px solid #8dc6f8;
-  background: #f8fcff;
-  color: #4b9de4;
+  border: 1px solid transparent;
+  background: var(--color-bg-secondary-button);
+  color: var(--color-primary);
 
   &:hover:not(:disabled) {
-    background: #e8f5ff;
-    border-color: #6bb3f5;
+    background: var(--color-primary-subtle);
+    border-color: transparent;
   }
 
   &:focus-visible {
-    outline: 2px solid #4b9de4;
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
 
   &:active:not(:disabled) {
-    background: #d8eeff;
-    border-color: #4b9de4;
+    background: var(--color-primary-subtle);
+    border-color: transparent;
   }
 
   &:disabled {
@@ -106,20 +109,20 @@
 
 .createButton {
   border: none;
-  color: #ffffff;
-  background: #45a6ff;
+  color: var(--color-text-inverse);
+  background: var(--color-primary);
 
   &:hover:not(:disabled) {
-    background: #2d8ef5;
+    background: var(--color-primary-hover);
   }
 
   &:focus-visible {
-    outline: 2px solid #45a6ff;
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
 
   &:active:not(:disabled) {
-    background: #1a7de8;
+    background: var(--color-primary-active);
   }
 
   &:disabled {
