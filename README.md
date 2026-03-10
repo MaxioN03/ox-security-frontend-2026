@@ -1,6 +1,6 @@
 # OX Security — Employee Directory (Test Task)
 
-> **Simple test task.** Clone, run a few commands, and you're done. No complex setup.
+> **OX Security test task.**
 
 ## Quick Start
 
