@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
-import type { RootState } from '../../../app/store';
-import { usersApi } from '../../../infrastructure/api/usersApi';
+import type { RootState } from '@/app/store';
+import { usersApi } from '@/infrastructure/api/usersApi';
 
 const selectUsersQueryResult = usersApi.endpoints.getUsers.select();
 

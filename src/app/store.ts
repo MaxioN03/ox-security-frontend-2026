@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { employeesUiReducer } from '../features/employees/model/uiSlice';
-import { usersApi } from '../infrastructure/api/usersApi';
+import { employeesUiReducer } from '@/features/employees/model/uiSlice';
+import { usersApi } from '@/infrastructure/api/usersApi';
 
 export const store = configureStore({
   reducer: {

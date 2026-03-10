@@ -1,9 +1,9 @@
-import { type FC, useRef } from 'react';
+import { type FC, useEffect, useRef, useState } from 'react';
 import {
   EMPLOYEE_STATUSES,
   EMPLOYEE_STATUS_LABELS,
   type EmployeeStatusFilter,
-} from '../../../domain/status';
+} from '@/domain/status';
 import styles from './EmployeesToolbar.module.scss';
 
 interface EmployeesToolbarProps {
@@ -14,6 +14,8 @@ interface EmployeesToolbarProps {
   onCreateClick: () => void;
 }
 
+const SEARCH_DEBOUNCE_MS = 300;
+
 export const EmployeesToolbar: FC<EmployeesToolbarProps> = ({
   searchTerm,
   statusFilter,
@@ -22,6 +24,27 @@ export const EmployeesToolbar: FC<EmployeesToolbarProps> = ({
   onCreateClick,
 }) => {
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
+  const [localSearch, setLocalSearch] = useState(searchTerm);
+
+  useEffect(() => {
+    setLocalSearch(searchTerm);
+  }, [searchTerm]);
+
+  const handleSearchChange = (value: string) => {
+    setLocalSearch(value);
+    clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(
+      () => onSearchTermChange(value),
+      SEARCH_DEBOUNCE_MS,
+    );
+  };
+
+  useEffect(() => {
+    return () => clearTimeout(debounceRef.current);
+  }, []);
 
   const focusSearchInput = () => {
     searchInputRef.current?.focus();
@@ -33,6 +56,7 @@ export const EmployeesToolbar: FC<EmployeesToolbarProps> = ({
         type="button"
         className={styles.createButton}
         onClick={onCreateClick}
+        aria-label="Create new employee"
       >
         Create
         <svg
@@ -93,10 +117,11 @@ export const EmployeesToolbar: FC<EmployeesToolbarProps> = ({
           <input
             ref={searchInputRef}
             className={styles.searchInput}
-            type="text"
-            value={searchTerm}
+            type="search"
+            value={localSearch}
             placeholder="Type to search"
-            onChange={(event) => onSearchTermChange(event.target.value)}
+            aria-label="Search employees by name"
+            onChange={(event) => handleSearchChange(event.target.value)}
           />
         </div>
 
@@ -106,6 +131,7 @@ export const EmployeesToolbar: FC<EmployeesToolbarProps> = ({
           <select
             className={styles.filterSelect}
             value={statusFilter}
+            aria-label="Filter by status"
             onChange={(event) =>
               onStatusFilterChange(event.target.value as EmployeeStatusFilter)
             }

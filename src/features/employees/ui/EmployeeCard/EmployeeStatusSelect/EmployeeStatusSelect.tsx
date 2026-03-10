@@ -3,37 +3,35 @@ import {
   EMPLOYEE_STATUSES,
   EMPLOYEE_STATUS_LABELS,
   type EmployeeStatus,
-} from '../../../../../domain/status';
+} from '@/domain/status';
 import styles from './EmployeeStatusSelect.module.scss';
-
-const STATUS_COLOR_VARS: Record<EmployeeStatus, string> = {
-  Working: 'var(--color-status-working)',
-  OnVacation: 'var(--color-status-vacation)',
-  LunchTime: 'var(--color-status-lunch)',
-  BusinessTrip: 'var(--color-status-trip)',
-};
 
 interface EmployeeStatusSelectProps {
   value: EmployeeStatus;
   disabled?: boolean;
+  id?: string;
+  'aria-label'?: string;
   onChange: (status: EmployeeStatus) => void;
 }
 
 export const EmployeeStatusSelect: FC<EmployeeStatusSelectProps> = ({
   value,
   disabled = false,
+  id,
+  'aria-label': ariaLabel,
   onChange,
 }) => {
   return (
     <div className={styles.wrapper}>
       <span
-        className={styles.ring}
-        style={{ borderColor: STATUS_COLOR_VARS[value] }}
+        className={`${styles.ring} ${styles[`ring${value}` as keyof typeof styles]}`}
         aria-hidden="true"
       />
       <div className={styles.inner}>
         <select
           className={styles.select}
+          id={id}
+          aria-label={ariaLabel}
           value={value}
           onChange={(event) => onChange(event.target.value as EmployeeStatus)}
           disabled={disabled}

@@ -35,6 +35,7 @@ export const EmployeesHeader: FC<EmployeesHeaderProps> = ({
         type="button"
         className={styles.logoutButton}
         onClick={onLogoutClick}
+        aria-label="Log out"
       >
         Log Out
       </button>

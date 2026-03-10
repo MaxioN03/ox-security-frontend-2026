@@ -1,30 +1,34 @@
-import { type FC, useCallback, useEffect, useRef, useState } from 'react';
+import { type FC, useCallback, useEffect, useRef } from 'react';
 import type { EmployeeStatus } from '@/domain/status';
-import { EmployeeStatusSelect } from './EmployeeCard/EmployeeStatusSelect';
-import styles from './CreateUserModal.module.scss';
+import { EMPLOYEE_STATUS_LABELS } from '@/domain/status';
+import styles from './ConfirmStatusChangeModal.module.scss';
 
-interface CreateUserModalProps {
+interface ConfirmStatusChangeModalProps {
   isOpen: boolean;
+  employeeName: string;
+  currentStatus: EmployeeStatus;
+  newStatus: EmployeeStatus;
+  isUpdating: boolean;
+  onConfirm: () => void;
   onClose: () => void;
 }
-
-const NAME_PATTERN = /^[A-Za-z\s]*$/;
 
 const FOCUSABLE_SELECTOR =
   'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [href], [tabindex]:not([tabindex="-1"])';
 
-export const CreateUserModal: FC<CreateUserModalProps> = ({
+export const ConfirmStatusChangeModal: FC<ConfirmStatusChangeModalProps> = ({
   isOpen,
+  employeeName,
+  currentStatus,
+  newStatus,
+  isUpdating,
+  onConfirm,
   onClose,
 }) => {
-  const [name, setName] = useState('');
-  const [status, setStatus] = useState<EmployeeStatus>('Working');
   const modalRef = useRef<HTMLDivElement>(null);
   const previousActiveElementRef = useRef<HTMLElement | null>(null);
 
   const handleClose = useCallback(() => {
-    setName('');
-    setStatus('Working');
     previousActiveElementRef.current?.focus();
     onClose();
   }, [onClose]);
@@ -65,15 +69,17 @@ export const CreateUserModal: FC<CreateUserModalProps> = ({
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, handleClose]);
 
-  const handleNameChange = (value: string) => {
-    if (NAME_PATTERN.test(value)) {
-      setName(value);
-    }
-  };
+  const handleConfirm = useCallback(() => {
+    onConfirm();
+    handleClose();
+  }, [onConfirm, handleClose]);
 
   if (!isOpen) {
     return null;
   }
+
+  const currentLabel = EMPLOYEE_STATUS_LABELS[currentStatus];
+  const newLabel = EMPLOYEE_STATUS_LABELS[newStatus];
 
   return (
     <div
@@ -86,57 +92,32 @@ export const CreateUserModal: FC<CreateUserModalProps> = ({
         className={styles.root}
         role="dialog"
         aria-modal="true"
-        aria-labelledby="create-user-title"
-        aria-describedby="create-user-description"
+        aria-labelledby="confirm-status-title"
+        aria-describedby="confirm-status-description"
       >
-        <header className={styles.header}>
-          <h2 id="create-user-title" className={styles.title}>
-            Create New User
-          </h2>
-          <div className={styles.divider} />
-        </header>
-        <p id="create-user-description" className={styles.srOnly}>
-          Enter a name and status for the new employee.
+        <h2 id="confirm-status-title" className={styles.title}>
+          Change status?
+        </h2>
+        <p id="confirm-status-description" className={styles.description}>
+          Change {employeeName}&apos;s status from {currentLabel} to {newLabel}?
         </p>
-
-        <label className={styles.label} htmlFor="create-user-name">
-          User name:
-        </label>
-        <input
-          className={styles.input}
-          id="create-user-name"
-          type="text"
-          value={name}
-          placeholder="e.g. John Smith"
-          onChange={(event) => handleNameChange(event.target.value)}
-        />
-
-        <label className={styles.label} htmlFor="create-user-status">
-          Status:
-        </label>
-        <div className={styles.statusSelectWrapper}>
-          <EmployeeStatusSelect
-            id="create-user-status"
-            value={status}
-            onChange={setStatus}
-          />
-        </div>
 
         <div className={styles.actions}>
           <button
             type="button"
-            className={styles.createButton}
+            className={styles.cancelButton}
             onClick={handleClose}
-            disabled={!name.trim()}
+            disabled={isUpdating}
           >
-            Create
+            Cancel
           </button>
           <button
             type="button"
-            className={styles.cancelButton}
-            onClick={handleClose}
+            className={styles.confirmButton}
+            onClick={handleConfirm}
+            disabled={isUpdating}
           >
-            Cancel
+            {isUpdating ? 'Updating…' : 'Confirm'}
           </button>
         </div>
       </div>

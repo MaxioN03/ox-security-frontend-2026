@@ -1,8 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type {
-  EmployeeStatus,
-  EmployeeStatusFilter,
-} from '../../../domain/status';
+import type { EmployeeStatus, EmployeeStatusFilter } from '@/domain/status';
 
 interface EmployeesUiState {
   searchTerm: string;

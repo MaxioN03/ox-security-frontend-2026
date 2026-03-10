@@ -1,21 +1,25 @@
 import { type FC, useMemo, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import type { EmployeeStatus } from '../../../domain/status';
+import toast from 'react-hot-toast';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import type { EmployeeStatus } from '@/domain/status';
 import {
   useGetUsersQuery,
   useUpdateUserStatusMutation,
-} from '../../../infrastructure/api/usersApi';
+} from '@/infrastructure/api/usersApi';
+import {
+  selectAllEmployees,
+  selectEmployeesUiState,
+  selectFilteredAndSearchedEmployees,
+  selectPendingStatusByUserId,
+} from '../model/selectors';
 import {
   clearPendingStatus,
   setPendingStatus,
   setSearchTerm,
   setStatusFilter,
 } from '../model/uiSlice';
-import {
-  selectEmployeesUiState,
-  selectFilteredAndSearchedEmployees,
-  selectPendingStatusByUserId,
-} from '../model/selectors';
+import { useUrlSync } from '../model/useUrlSync';
+import { ConfirmStatusChangeModal } from './ConfirmStatusChangeModal';
 import { CreateUserModal } from './CreateUserModal';
 import { EmployeeCard } from './EmployeeCard';
 import { EmployeeCardSkeleton } from './EmployeeCardSkeleton';
@@ -29,10 +33,19 @@ export const EmployeesPage: FC = () => {
   const [updateUserStatus, { isLoading: isUpdating }] =
     useUpdateUserStatusMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [confirmModal, setConfirmModal] = useState<{
+    userId: number;
+    name: string;
+    currentStatus: EmployeeStatus;
+    newStatus: EmployeeStatus;
+  } | null>(null);
 
   const { searchTerm, statusFilter } = useAppSelector(selectEmployeesUiState);
+  const allEmployees = useAppSelector(selectAllEmployees);
   const employees = useAppSelector(selectFilteredAndSearchedEmployees);
   const pendingStatusByUserId = useAppSelector(selectPendingStatusByUserId);
+
+  useUrlSync(dispatch, searchTerm, statusFilter);
 
   const employeesWithPendingStatus = useMemo(
     () =>
@@ -43,20 +56,28 @@ export const EmployeesPage: FC = () => {
     [employees, pendingStatusByUserId],
   );
 
-  const handleStatusChange = async (
+  const handleStatusChangeRequest = (
     userId: number,
     newStatus: EmployeeStatus,
     currentStatus: EmployeeStatus,
+    name: string,
   ) => {
-    if (newStatus === currentStatus) {
-      return;
-    }
+    if (newStatus === currentStatus) return;
+    setConfirmModal({ userId, name, currentStatus, newStatus });
+  };
 
+  const handleStatusChangeConfirm = async () => {
+    if (!confirmModal) return;
+    const { userId, newStatus } = confirmModal;
     dispatch(setPendingStatus({ userId, status: newStatus }));
+    setConfirmModal(null);
     try {
       await updateUserStatus({ userId, status: newStatus }).unwrap();
-    } finally {
       dispatch(clearPendingStatus(userId));
+      toast.success('Status updated');
+    } catch {
+      dispatch(clearPendingStatus(userId));
+      toast.error('Failed to update status');
     }
   };
 
@@ -67,13 +88,15 @@ export const EmployeesPage: FC = () => {
       </div>
 
       <section className={styles.page}>
-        <EmployeesToolbar
-          searchTerm={searchTerm}
-          statusFilter={statusFilter}
-          onSearchTermChange={(value) => dispatch(setSearchTerm(value))}
-          onStatusFilterChange={(value) => dispatch(setStatusFilter(value))}
-          onCreateClick={() => setIsModalOpen(true)}
-        />
+        <div className={styles.toolbarWrapper}>
+          <EmployeesToolbar
+            searchTerm={searchTerm}
+            statusFilter={statusFilter}
+            onSearchTermChange={(value) => dispatch(setSearchTerm(value))}
+            onStatusFilterChange={(value) => dispatch(setStatusFilter(value))}
+            onCreateClick={() => setIsModalOpen(true)}
+          />
+        </div>
 
         {isLoading && (
           <ul className={styles.list}>
@@ -85,14 +108,15 @@ export const EmployeesPage: FC = () => {
 
         {isError ? (
           <p className={`${styles.stateMessage} ${styles.stateError}`}>
-            Failed to load employees. Please ensure backend runs on
-            localhost:8000.
+            Couldn&apos;t load employees. Please try again later.
           </p>
         ) : null}
 
         {!isLoading && !isError && employeesWithPendingStatus.length === 0 ? (
           <p className={styles.stateMessage}>
-            No employees match your filters.
+            {allEmployees.length === 0
+              ? 'No employees yet.'
+              : 'No employees match your filters.'}
           </p>
         ) : null}
 
@@ -108,7 +132,12 @@ export const EmployeesPage: FC = () => {
                 pendingStatus={employee.pendingStatus}
                 isUpdating={isUpdating}
                 onStatusChange={(userId, status) =>
-                  handleStatusChange(userId, status, employee.status)
+                  handleStatusChangeRequest(
+                    userId,
+                    status,
+                    employee.status,
+                    employee.name,
+                  )
                 }
               />
             ))}
@@ -119,6 +148,16 @@ export const EmployeesPage: FC = () => {
       <CreateUserModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+      />
+
+      <ConfirmStatusChangeModal
+        isOpen={confirmModal !== null}
+        employeeName={confirmModal?.name ?? ''}
+        currentStatus={confirmModal?.currentStatus ?? 'Working'}
+        newStatus={confirmModal?.newStatus ?? 'Working'}
+        isUpdating={isUpdating}
+        onConfirm={handleStatusChangeConfirm}
+        onClose={() => setConfirmModal(null)}
       />
     </div>
   );

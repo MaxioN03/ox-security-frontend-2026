@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: row;
   gap: 8px;
-  margin-bottom: 64px;
 
   @media (max-width: 860px) {
     flex-wrap: wrap;
@@ -114,6 +113,11 @@
   background: transparent;
   outline: none;
 
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
   &::placeholder {
     color: var(--color-text-muted);
   }
@@ -141,6 +145,12 @@
   color: var(--color-text-primary);
   appearance: none;
   -webkit-appearance: none;
+  outline: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
 }
 
 .filterSelectArrow {

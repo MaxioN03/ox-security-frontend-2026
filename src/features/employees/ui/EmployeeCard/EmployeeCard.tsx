@@ -1,5 +1,5 @@
 import { type FC } from 'react';
-import type { EmployeeStatus } from '../../../../domain/status';
+import type { EmployeeStatus } from '@/domain/status';
 import { EmployeeAvatar } from './EmployeeAvatar';
 import { EmployeeStatusSelect } from './EmployeeStatusSelect';
 import styles from './EmployeeCard.module.scss';
@@ -37,6 +37,7 @@ export const EmployeeCard: FC<EmployeeCardProps> = ({
         <EmployeeStatusSelect
           value={pendingStatus}
           disabled={isUpdating}
+          aria-label={`Change status for ${name}`}
           onChange={handleSelectChange}
         />
       </div>
