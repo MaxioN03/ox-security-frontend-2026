@@ -1,0 +1,27 @@
+.label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  border: none;
+  border-bottom: 1px solid var(--color-text-primary);
+  border-radius: 0;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0 0 4px 0;
+  background: transparent;
+  color: var(--color-text-primary);
+  outline: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}

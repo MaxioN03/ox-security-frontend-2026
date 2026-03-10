@@ -1,73 +1,69 @@
-# React + TypeScript + Vite
+# OX Security — Employee Directory
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web application for managing and viewing employee status across an organization.
 
-Currently, two official plugins are available:
+## Product Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Employee Directory is an internal tool for tracking team availability. It displays a list of employees with their current status (Working, On Vacation, Lunch Time, Business Trip), supports search and filtering, and allows updating status in real time.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+| Layer         | Technologies              |
+| --------------- | --------------------------- |
+| **Framework** | React 19, TypeScript      |
+| **Build**     | Vite 7                    |
+| **State**     | Redux Toolkit, RTK Query  |
+| **Styling**   | SASS (SCSS modules)       |
+| **Testing**   | Vitest                    |
+| **Backend**   | Express (see `../backend`) |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Employee list** — View all employees with avatar, name, and status
+- **Search** — Filter by name (case-insensitive)
+- **Status filter** — Filter by Working, On Vacation, Lunch Time, or Business Trip
+- **Update status** — Change employee status with confirmation modal and optimistic updates
+- **Create employee** — Add new employees via modal (name + initial status)
+- **URL sync** — Search and filter state reflected in the URL for sharing and bookmarking
+- **Responsive UI** — Loading skeletons, error states, and accessible modals
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Getting Started
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Prerequisites
+
+- Node.js 18+
+- Backend running on `http://localhost:8000` (see `../backend`)
+
+### Install & Run
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open [http://localhost:5173](http://localhost:5173).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Scripts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+
+| Command              | Description                         |
+| ---------------------- | ------------------------------------- |
+| `npm run dev`        | Start dev server with HMR           |
+| `npm run build`      | Type-check and build for production |
+| `npm run preview`    | Preview production build            |
+| `npm run test`       | Run unit tests                      |
+| `npm run test:watch` | Run tests in watch mode             |
+| `npm run lint`       | Run ESLint                          |
+
+## Project Structure
+
+```
+src/
+├── app/           # Store, providers, hooks
+├── domain/        # Types, constants (Employee, Status)
+├── features/
+│   └── employees/ # Employee list, cards, modals, selectors
+└── infrastructure/
+    └── api/       # RTK Query API (usersApi)
 ```

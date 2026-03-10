@@ -4,6 +4,7 @@ import {
   EMPLOYEE_STATUS_LABELS,
   type EmployeeStatus,
 } from '@/domain/status';
+import { Select } from '@/shared/ui';
 import styles from './EmployeeStatusSelect.module.scss';
 
 interface EmployeeStatusSelectProps {
@@ -21,37 +22,27 @@ export const EmployeeStatusSelect: FC<EmployeeStatusSelectProps> = ({
   'aria-label': ariaLabel,
   onChange,
 }) => {
+  const options = EMPLOYEE_STATUSES.map((status) => ({
+    value: status,
+    label: EMPLOYEE_STATUS_LABELS[status],
+  }));
+
+  const ringPrefix = (
+    <span
+      className={`${styles.ring} ${styles[`ring${value}` as keyof typeof styles]}`}
+      aria-hidden="true"
+    />
+  );
+
   return (
-    <div className={styles.wrapper}>
-      <span
-        className={`${styles.ring} ${styles[`ring${value}` as keyof typeof styles]}`}
-        aria-hidden="true"
-      />
-      <div className={styles.inner}>
-        <select
-          className={styles.select}
-          id={id}
-          aria-label={ariaLabel}
-          value={value}
-          onChange={(event) => onChange(event.target.value as EmployeeStatus)}
-          disabled={disabled}
-        >
-          {EMPLOYEE_STATUSES.map((status) => (
-            <option key={status} value={status}>
-              {EMPLOYEE_STATUS_LABELS[status]}
-            </option>
-          ))}
-        </select>
-        <svg
-          className={styles.arrow}
-          viewBox="0 0 24 24"
-          width={12}
-          height={12}
-          aria-hidden="true"
-        >
-          <path d="M6 9 L12 15 L18 9 Z" fill="currentColor" />
-        </svg>
-      </div>
-    </div>
+    <Select
+      value={value}
+      options={options}
+      disabled={disabled}
+      id={id}
+      aria-label={ariaLabel}
+      prefix={ringPrefix}
+      onChange={(v) => onChange(v as EmployeeStatus)}
+    />
   );
 };

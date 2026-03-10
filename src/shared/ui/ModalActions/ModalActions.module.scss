@@ -1,0 +1,12 @@
+.root {
+  display: flex;
+  gap: 8px;
+}
+
+.alignStart {
+  justify-content: flex-start;
+}
+
+.alignEnd {
+  justify-content: flex-end;
+}

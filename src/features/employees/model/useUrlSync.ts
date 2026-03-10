@@ -55,7 +55,6 @@ export function useUrlSync(
     return () => window.removeEventListener('popstate', handlePopState);
   }, [dispatch]);
 
-  // Sync Redux -> URL when user changes search/filter (skip initial run)
   useEffect(() => {
     if (skipNextUrlUpdate.current) {
       skipNextUrlUpdate.current = false;
