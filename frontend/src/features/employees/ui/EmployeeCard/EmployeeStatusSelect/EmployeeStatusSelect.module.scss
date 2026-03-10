@@ -1,0 +1,23 @@
+.ring {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid;
+  flex-shrink: 0;
+
+  &.ringWorking {
+    border-color: var(--color-status-working);
+  }
+
+  &.ringOnVacation {
+    border-color: var(--color-status-vacation);
+  }
+
+  &.ringLunchTime {
+    border-color: var(--color-status-lunch);
+  }
+
+  &.ringBusinessTrip {
+    border-color: var(--color-status-trip);
+  }
+}

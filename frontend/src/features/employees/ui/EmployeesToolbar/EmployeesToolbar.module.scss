@@ -1,0 +1,102 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+
+  @media (max-width: 860px) {
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 560px) {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+}
+
+.createButton {
+  height: 52px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-inverse);
+  background: var(--color-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 120px;
+  justify-content: center;
+  padding: 0 32px;
+  transition: background-color 0.15s ease;
+  flex-shrink: 0;
+
+  @media (max-width: 560px) {
+    width: 100%;
+  }
+
+  &:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  &:active:not(:disabled) {
+    background: var(--color-primary-active);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.createIcon {
+  flex-shrink: 0;
+}
+
+.searchFilterModule {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  overflow: hidden;
+
+  @media (max-width: 560px) {
+    flex: none;
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.searchFilterDivider {
+  width: 1px;
+  background: var(--color-border);
+  margin: 8px 0;
+
+  @media (max-width: 560px) {
+    width: 100%;
+    height: 1px;
+    margin: 0 8px;
+  }
+}
+
+.filterSelectWrapper {
+  position: relative;
+  flex: 1;
+  min-width: 180px;
+  flex-shrink: 0;
+
+  @media (max-width: 560px) {
+    width: 100%;
+    min-width: 0;
+  }
+}

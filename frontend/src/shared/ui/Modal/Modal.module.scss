@@ -1,0 +1,22 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--color-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  z-index: 20;
+}
+
+.root {
+  width: 100%;
+  min-width: 280px;
+  max-width: 420px;
+  box-sizing: border-box;
+  background: var(--color-surface);
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 20px 32px var(--color-shadow-modal);
+}

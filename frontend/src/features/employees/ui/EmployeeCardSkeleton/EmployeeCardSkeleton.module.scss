@@ -1,0 +1,78 @@
+.root {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 24px 16px;
+  box-shadow: 0 2px 8px var(--color-shadow);
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 16px;
+  align-items: stretch;
+  width: 100%;
+  min-width: 280px;
+  min-height: 160px;
+  box-sizing: border-box;
+}
+
+.avatar {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: linear-gradient(
+    90deg,
+    var(--color-border) 0%,
+    var(--color-gray-100) 50%,
+    var(--color-border) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+}
+
+.name {
+  height: 16px;
+  width: 60%;
+  max-width: 120px;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--color-border) 0%,
+    var(--color-gray-100) 50%,
+    var(--color-border) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.statusLine {
+  height: 24px;
+  width: 80%;
+  max-width: 140px;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--color-border) 0%,
+    var(--color-gray-100) 50%,
+    var(--color-border) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

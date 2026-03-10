@@ -1,0 +1,15 @@
+.colorInherit {
+  color: inherit;
+}
+
+.colorPrimary {
+  color: var(--color-primary);
+}
+
+.colorMuted {
+  color: var(--color-text-muted);
+}
+
+.colorSecondary {
+  color: var(--color-text-secondary);
+}
